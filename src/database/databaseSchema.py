@@ -1,11 +1,11 @@
-from databaseSingleton import  DatabaseConnection
+from database.databaseSingleton import  DatabaseConnection
 from pathlib import Path
 class DatabaseSchema:
     def __init__(self):
         self._db_con = DatabaseConnection()
-        self._schema_path = Path(__file__).resolve().parent / "sqlCommands" / "schema.sql"
-        self._views_path = Path(__file__).resolve().parent / "sqlCommands" / "views.sql"
-        self._inserts_path = Path(__file__).resolve().parent / "sqlCommands" / "inserts.sql"
+        self._schema_path = Path(__file__).resolve().parent.parent / "sqlCommands" / "schema.sql"
+        self._views_path = Path(__file__).resolve().parent.parent / "sqlCommands" / "views.sql"
+        self._inserts_path = Path(__file__).resolve().parent.parent / "sqlCommands" / "inserts.sql"
         try:
             self._create_database_schema()
             self._create_views()
