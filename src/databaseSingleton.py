@@ -1,6 +1,9 @@
 from mysql.connector import Error
 import mysql.connector as mysql
 import os 
+# without it .env file in not loading properly 
+from dotenv import load_dotenv
+load_dotenv()
 
 class DatabaseConnection:
     _instance = None 
@@ -10,13 +13,10 @@ class DatabaseConnection:
         if cls._instance is None:
             cls._instance = super(DatabaseConnection, cls).__new__(cls)
             try:
-                # Initialize the connection once
                 cls._connection = mysql.connect(
-                    host=os.getenv("db_host"),
-                    user=os.getenv("db_user"),
-                    password=os.getenv("db_password"),
-                    database=os.getenv("db_name"),
-                    port=3306
+                    host=os.getenv("DB_HOST"),
+                    user=os.getenv("DB_USER"),
+                    password=os.getenv("DB_PASS"),
                 )
                 print("--- Database Connection Established ---")
             except Error as e:

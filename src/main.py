@@ -1,11 +1,4 @@
 from databaseSingleton import DatabaseConnection
-db = DatabaseConnection()
+from databaseSchema import DatabaseSchema
 
-cursor = db.connection.cursor()
-query = "SELECT * FROM certificates"
-
-cursor.execute(query)
-result = cursor.fetchall()
-
-for _ in result:
-    print(_)
+DatabaseSchema()
