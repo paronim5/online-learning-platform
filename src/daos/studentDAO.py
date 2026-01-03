@@ -32,23 +32,106 @@ class StudentDAO(DaoInterface):
             print(f"Command failed: {e}")
 
         finally:
-        # 4. Always close your cursor!
             if 'cursor' in locals():
                 cursor.close()
             return students
     
     def get_by_id(self, id) -> Student:
         query = "SELECT id, name, email, registration_date FROM students WHERE id = %s"
-        raise NotImplementedError
+        student = None
+        try:
+            cursor = self._db_con.connection.cursor(dictionary=True)
+            print(f"Executing command: {query} with ID: {id}")
+            # comma must be there becase we must provide tuple (or list) without it we can't execute this statement
+            cursor.execute(query, (id,))
+            print(f"Success: {query[:30]}...")
+
+            row = cursor.fetchone()
+
+            if row:
+                student = Student(
+                    id=row['id'],
+                    name=row['name'],
+                    email=row['email'],
+                    registration_date=row['registration_date']
+                )
+                print(f"Successfully fetched student: {student.name}")
+            else:
+                print(f"No student found with ID: {id}")
+
+        except Exception as e:
+            print(f"Command failed: {e}")
+
+        finally:
+            if 'cursor' in locals():
+                cursor.close()
+            return student
     
-    def save(self, object) -> bool:
+    def save(self, student: Student) -> bool:
         query = "INSERT INTO students (name, email, registration_date) VALUES (%s, %s, %s)"
-        raise NotImplementedError
-    
-    def update(self, id) -> bool:
+        params = (student.name, student.email, student.registration_date)
+        success = False
+        try:
+            cursor = self._db_con.connection.cursor()
+            print(f"Executing command: {query}")
+            
+            cursor.execute(query, params)
+            self._db_con.connection.commit() # Save changes
+            
+            print(f"Success: Record inserted with ID {cursor.lastrowid}")
+            success = True
+        except Exception as e:
+            print(f"Command failed: {e}")
+            self._db_con.connection.rollback() # Undo on error
+        finally:
+            if 'cursor' in locals():
+                cursor.close()
+            return success
+
+    def update(self, id, student: Student) -> bool:
         query = "UPDATE students SET name = %s, email = %s, registration_date = %s WHERE id = %s"
-        raise NotImplementedError
-    
+        # The id goes at the end to match the WHERE clause placeholder
+        params = (student.name, student.email, student.registration_date, id)
+        success = False
+        try:
+            cursor = self._db_con.connection.cursor()
+            print(f"Executing command: {query}")
+            
+            cursor.execute(query, params)
+            self._db_con.connection.commit()
+            
+            if cursor.rowcount > 0:
+                print(f"Success: Student with ID {id} updated.")
+                success = True
+            else:
+                print(f"No student found with ID {id} to update.")
+        except Exception as e:
+            print(f"Command failed: {e}")
+            self._db_con.connection.rollback()
+        finally:
+            if 'cursor' in locals():
+                cursor.close()
+            return success
+
     def delete(self, id) -> bool:
         query = "DELETE FROM students WHERE id = %s"
-        raise NotImplementedError
+        success = False
+        try:
+            cursor = self._db_con.connection.cursor()
+            print(f"Executing command: {query} with ID: {id}")
+            
+            cursor.execute(query, (id,))
+            self._db_con.connection.commit()
+            
+            if cursor.rowcount > 0:
+                print(f"Success: Student with ID {id} deleted.")
+                success = True
+            else:
+                print(f"No student found with ID {id} to delete.")
+        except Exception as e:
+            print(f"Command failed: {e}")
+            self._db_con.connection.rollback()
+        finally:
+            if 'cursor' in locals():
+                cursor.close()
+            return success
