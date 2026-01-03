@@ -1,7 +1,7 @@
 from mysql.connector import Error
 import mysql.connector as mysql
 import os 
-# without it .env file in not loading properly 
+# without it .env file is not loading properly 
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -9,7 +9,7 @@ class DatabaseConnection:
     _instance = None 
     _connection = None
 
-    def __new__(cls):
+    def __new__(cls, database_name=None):
         if cls._instance is None:
             cls._instance = super(DatabaseConnection, cls).__new__(cls)
             try:
@@ -23,7 +23,19 @@ class DatabaseConnection:
                 print(f"Error connecting to MySQL: {e}")
                 cls._connection = None
         return cls._instance
+    
+    def select_database(self, db_name):
+        if self._connection:
+            try:
+                self._connection.database = db_name
+                print(f"--- Switched to database: {db_name} ---")
+            except Error as e:
+                print(f"Error switching database: {e}")
 
     @property
     def connection(self):
+        return self._connection
+    
+    @property
+    def cursor(self):
         return self._connection
