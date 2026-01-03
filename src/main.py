@@ -40,6 +40,8 @@ from commands.certificates.view_certificates import ViewCertificatesCommand
 from commands.certificates.update_certificate import UpdateCertificateCommand
 from commands.certificates.delete_certificate import DeleteCertificateCommand
 
+from utils.logger import logger
+
 def main():
     try:
         student_dao = StudentDAO()
@@ -48,7 +50,7 @@ def main():
         enrollment_dao = EnrollmentDAO()
         certificate_dao = CertificateDAO()
     except Exception as e:
-        print(f"Failed to initialize DAOs: {e}")
+        logger.error(f"Failed to initialize DAOs: {e}")
         return
 
     invoker = CommandInvoker()
@@ -66,7 +68,7 @@ def main():
         choice = input("Select Table/Option: ")
 
         if choice == '7':
-            print("Goodbye!")
+            logger.info("Goodbye!")
             break
         elif choice == '6':
             invoker.undo_last_command()
@@ -117,7 +119,7 @@ def main():
                 '4': DeleteCertificateCommand(certificate_dao)
             }
         else:
-            print("[!] Invalid option.")
+            logger.warning("[!] Invalid option.")
             continue
 
         print(f"\n--- {context_name} OPERATIONS ---")
@@ -135,7 +137,7 @@ def main():
         if cmd:
             invoker.execute_command(cmd)
         else:
-            print("Invalid operation.")
+            logger.warning("Invalid operation.")
 
 if __name__ == "__main__":
     main()

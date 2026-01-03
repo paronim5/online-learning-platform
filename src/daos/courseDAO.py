@@ -1,6 +1,7 @@
 from daos.DAOInterface import DaoInterface
 from database.databaseSingleton import DatabaseConnection as conn
 from models.course import Course
+from utils.logger import log
 
 class CourseDAO(DaoInterface):
     def __init__(self):
@@ -16,7 +17,7 @@ class CourseDAO(DaoInterface):
             for row in cursor.fetchall():
                 courses.append(Course(**row))
         except Exception as e:
-            print(f"Error: {e}")
+            log(f"Error: {e}", "ERROR")
         finally:
             if 'cursor' in locals(): cursor.close()
             return courses
@@ -53,7 +54,7 @@ class CourseDAO(DaoInterface):
             self._db_con.connection.commit()
             return cursor.rowcount > 0
         except Exception as e:
-            print(f"Error: {e}"); self._db_con.connection.rollback(); return False
+            log(f"Error: {e}", "ERROR"); self._db_con.connection.rollback(); return False
         finally:
             if 'cursor' in locals(): cursor.close()
 
@@ -64,6 +65,6 @@ class CourseDAO(DaoInterface):
             self._db_con.connection.commit()
             return cursor.lastrowid
         except Exception as e:
-            print(f"Error: {e}"); self._db_con.connection.rollback(); return None
+            log(f"Error: {e}", "ERROR"); self._db_con.connection.rollback(); return None
         finally:
             if 'cursor' in locals(): cursor.close()

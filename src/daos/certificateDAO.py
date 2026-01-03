@@ -1,6 +1,7 @@
 from daos.DAOInterface import DaoInterface
 from database.databaseSingleton import DatabaseConnection as conn
 from models.certificate import Certificate
+from utils.logger import log
 
 class CertificateDAO(DaoInterface):
     def __init__(self):
@@ -50,7 +51,7 @@ class CertificateDAO(DaoInterface):
             self._db_con.connection.commit()
             return cursor.rowcount > 0
         except Exception as e:
-            print(f"Error: {e}"); self._db_con.connection.rollback(); return False
+            log(f"Error: {e}", "ERROR"); self._db_con.connection.rollback(); return False
         finally:
             if 'cursor' in locals(): cursor.close()
 
@@ -61,6 +62,6 @@ class CertificateDAO(DaoInterface):
             self._db_con.connection.commit()
             return cursor.lastrowid
         except Exception as e:
-            print(f"Error: {e}"); self._db_con.connection.rollback(); return None
+            log(f"Error: {e}", "ERROR"); self._db_con.connection.rollback(); return None
         finally:
             if 'cursor' in locals(): cursor.close()

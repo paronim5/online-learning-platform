@@ -3,6 +3,7 @@ from commands.base.command import Command
 from daos.certificateDAO import CertificateDAO
 from models.certificate import Certificate
 from utils.input_helper import get_int_input
+from utils.logger import logger
 
 class UpdateCertificateCommand(Command):
     def __init__(self, dao: CertificateDAO):
@@ -24,9 +25,9 @@ class UpdateCertificateCommand(Command):
             # We only allow updating cert number for simplicity here
             new_obj = Certificate(curr.student_id, curr.course_id, cert_num, curr.issue_date, curr.is_verified, id=self.target_id)
             if self.dao.update(self.target_id, new_obj):
-                print("[+] Updated.")
+                logger.info("[+] Updated.")
                 return True
-        except Exception as e: print(f"[!] Error: {e}")
+        except Exception as e: logger.error(f"[!] Error: {e}")
         return False
 
     def undo(self):

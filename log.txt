@@ -1,0 +1,48 @@
+2026-01-04 19:35:35,032 - app_logger - INFO - 
+--- Testing InstructorDAO ---
+2026-01-04 19:35:35,093 - app_logger - INFO - --- Database Connection Established ---
+2026-01-04 19:35:35,093 - app_logger - INFO - --- Switched to database: online_learning_platform ---
+2026-01-04 19:35:35,116 - app_logger - INFO - Created Instructor ID: 16
+2026-01-04 19:35:35,119 - app_logger - INFO - Update successful: Dr. Updated
+2026-01-04 19:35:35,119 - app_logger - INFO - 
+--- Testing CourseDAO ---
+2026-01-04 19:35:35,123 - app_logger - INFO - Created Course ID: 14
+2026-01-04 19:35:35,125 - app_logger - INFO - Update successful: Updated Course Title
+2026-01-04 19:35:35,125 - app_logger - INFO - 
+--- Testing StudentDAO ---
+2026-01-04 19:35:35,126 - app_logger - INFO - --- Switched to database: online_learning_platform ---
+2026-01-04 19:35:35,126 - app_logger - DEBUG - Executing command: INSERT INTO students (name, email, registration_date) VALUES (%s, %s, %s)
+2026-01-04 19:35:35,128 - app_logger - INFO - Success: Record inserted with ID 16
+2026-01-04 19:35:35,128 - app_logger - DEBUG - executing command SELECT id, name, email, registration_date FROM students
+2026-01-04 19:35:35,128 - app_logger - DEBUG - Success: SELECT id, name, email, regist...
+2026-01-04 19:35:35,128 - app_logger - DEBUG - Successfully fetched 10 students.
+2026-01-04 19:35:35,128 - app_logger - INFO - Created Student ID: 16
+2026-01-04 19:35:35,128 - app_logger - DEBUG - Executing command: UPDATE students SET name = %s, email = %s, registration_date = %s WHERE id = %s
+2026-01-04 19:35:35,130 - app_logger - INFO - Success: Student with ID 16 updated.
+2026-01-04 19:35:35,130 - app_logger - DEBUG - Executing command: SELECT id, name, email, registration_date FROM students WHERE id = %s with ID: 16
+2026-01-04 19:35:35,130 - app_logger - DEBUG - Success: SELECT id, name, email, regist...
+2026-01-04 19:35:35,130 - app_logger - DEBUG - Successfully fetched student: Updated Student
+2026-01-04 19:35:35,130 - app_logger - INFO - Update successful: Updated Student
+2026-01-04 19:35:35,130 - app_logger - INFO - 
+--- Testing EnrollmentDAO ---
+2026-01-04 19:35:35,133 - app_logger - INFO - Enrollment fetched: Progress is 10.0%
+2026-01-04 19:35:35,136 - app_logger - INFO - Update successful: Completed=1
+2026-01-04 19:35:35,136 - app_logger - INFO - 
+--- Testing CertificateDAO ---
+2026-01-04 19:35:35,139 - app_logger - INFO - Certificate Number: CERT-3289
+2026-01-04 19:35:35,142 - app_logger - INFO - Update successful: CERT-3289-REV
+2026-01-04 19:35:35,142 - app_logger - INFO - 
+--- Testing Delete Methods ---
+2026-01-04 19:35:35,143 - app_logger - INFO - Delete Certificate: True
+2026-01-04 19:35:35,145 - app_logger - INFO - Delete Enrollment: True
+2026-01-04 19:35:35,148 - app_logger - INFO - Delete Course: True
+2026-01-04 19:35:35,148 - app_logger - DEBUG - Executing command: DELETE FROM students WHERE id = %s with ID: 16
+2026-01-04 19:35:35,150 - app_logger - INFO - Success: Student with ID 16 deleted.
+2026-01-04 19:35:35,150 - app_logger - INFO - Delete Student: True
+2026-01-04 19:35:35,152 - app_logger - INFO - Delete Instructor: True
+2026-01-04 19:35:35,153 - app_logger - INFO - 
+--- ALL TESTS COMPLETED SUCCESSFULLY ---
+[2026-01-04 19:51:33] [INFO] Test log message via log function
+[2026-01-04 19:51:33] [INFO] Test log message via logger.info
+[2026-01-04 19:51:33] [ERROR] Test error message via logger.error
+[2026-01-04 19:51:33] [INFO] --- Database Connection Established ---

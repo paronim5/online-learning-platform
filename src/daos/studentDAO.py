@@ -1,6 +1,8 @@
 from daos.DAOInterface import DaoInterface
 from database.databaseSingleton import DatabaseConnection as conn
 from models.student import Student
+from utils.logger import log
+
 class StudentDAO(DaoInterface):
     def __init__(self):
         super().__init__()
@@ -13,10 +15,10 @@ class StudentDAO(DaoInterface):
         try:
             #easier mapping 
             cursor = self._db_con.connection.cursor(dictionary=True)
-            print(f"executing command {query}")
+            log(f"executing command {query}")
 
             cursor.execute(query)
-            print(f"Success: {query[:30]}...")
+            log(f"Success: {query[:30]}...")
 
             rows = cursor.fetchall()
 
@@ -27,9 +29,9 @@ class StudentDAO(DaoInterface):
                                   registration_date=row['registration_date']
                                   )
                 students.append(student)
-            print(f"Successfully fetched {len(students)} students.")
+            log(f"Successfully fetched {len(students)} students.")
         except Exception as e:
-            print(f"Command failed: {e}")
+            log(f"Command failed: {e}", "ERROR")
 
         finally:
             if 'cursor' in locals():
@@ -41,10 +43,10 @@ class StudentDAO(DaoInterface):
         student = None
         try:
             cursor = self._db_con.connection.cursor(dictionary=True)
-            print(f"Executing command: {query} with ID: {id}")
+            log(f"Executing command: {query} with ID: {id}")
             # comma must be there becase we must provide tuple (or list) without it we can't execute this statement
             cursor.execute(query, (id,))
-            print(f"Success: {query[:30]}...")
+            log(f"Success: {query[:30]}...")
 
             row = cursor.fetchone()
 
@@ -55,12 +57,12 @@ class StudentDAO(DaoInterface):
                     email=row['email'],
                     registration_date=row['registration_date']
                 )
-                print(f"Successfully fetched student: {student.name}")
+                log(f"Successfully fetched student: {student.name}")
             else:
-                print(f"No student found with ID: {id}")
+                log(f"No student found with ID: {id}", "WARNING")
 
         except Exception as e:
-            print(f"Command failed: {e}")
+            log(f"Command failed: {e}", "ERROR")
 
         finally:
             if 'cursor' in locals():
@@ -73,15 +75,15 @@ class StudentDAO(DaoInterface):
         inserted_id = None
         try:
             cursor = self._db_con.connection.cursor()
-            print(f"Executing command: {query}")
+            log(f"Executing command: {query}")
             
             cursor.execute(query, params)
             self._db_con.connection.commit() # Save changes
             
             inserted_id = cursor.lastrowid
-            print(f"Success: Record inserted with ID {inserted_id}")
+            log(f"Success: Record inserted with ID {inserted_id}")
         except Exception as e:
-            print(f"Command failed: {e}")
+            log(f"Command failed: {e}", "ERROR")
             self._db_con.connection.rollback() # Undo on error
         finally:
             if 'cursor' in locals():
@@ -95,18 +97,19 @@ class StudentDAO(DaoInterface):
         success = False
         try:
             cursor = self._db_con.connection.cursor()
-            print(f"Executing command: {query}")
+            log(f"Executing command: {query}")
             
             cursor.execute(query, params)
             self._db_con.connection.commit()
             
             if cursor.rowcount > 0:
-                print(f"Success: Student with ID {id} updated.")
                 success = True
+                log(f"Success: Student with ID {id} updated.")
             else:
-                print(f"No student found with ID {id} to update.")
+                log(f"No student found with ID {id} to update.", "WARNING")
+                
         except Exception as e:
-            print(f"Command failed: {e}")
+            log(f"Command failed: {e}", "ERROR")
             self._db_con.connection.rollback()
         finally:
             if 'cursor' in locals():
@@ -118,18 +121,19 @@ class StudentDAO(DaoInterface):
         success = False
         try:
             cursor = self._db_con.connection.cursor()
-            print(f"Executing command: {query} with ID: {id}")
+            log(f"Executing command: {query} with ID: {id}")
             
             cursor.execute(query, (id,))
             self._db_con.connection.commit()
             
             if cursor.rowcount > 0:
-                print(f"Success: Student with ID {id} deleted.")
                 success = True
+                log(f"Success: Student with ID {id} deleted.")
             else:
-                print(f"No student found with ID {id} to delete.")
+                log(f"No student found with ID {id} to delete.", "WARNING")
+                
         except Exception as e:
-            print(f"Command failed: {e}")
+            log(f"Command failed: {e}", "ERROR")
             self._db_con.connection.rollback()
         finally:
             if 'cursor' in locals():

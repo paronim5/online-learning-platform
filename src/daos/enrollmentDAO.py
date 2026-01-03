@@ -1,6 +1,7 @@
 from daos.DAOInterface import DaoInterface
 from database.databaseSingleton import DatabaseConnection as conn
 from models.enrollment import Enrollment
+from utils.logger import log
 
 class EnrollmentDAO(DaoInterface):
     def __init__(self):
@@ -14,7 +15,7 @@ class EnrollmentDAO(DaoInterface):
             cursor = self._db_con.connection.cursor(dictionary=True)
             cursor.execute(query)
             for row in cursor.fetchall(): results.append(Enrollment(**row))
-        except Exception as e: print(f"Error: {e}")
+        except Exception as e: log(f"Error: {e}", "ERROR")
         finally:
             if 'cursor' in locals(): cursor.close()
             return results
@@ -52,6 +53,6 @@ class EnrollmentDAO(DaoInterface):
             self._db_con.connection.commit()
             return cursor.rowcount > 0
         except Exception as e:
-            print(f"Error: {e}"); self._db_con.connection.rollback(); return False
+            log(f"Error: {e}", "ERROR"); self._db_con.connection.rollback(); return False
         finally:
             if 'cursor' in locals(): cursor.close()

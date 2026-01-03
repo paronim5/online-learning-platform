@@ -3,6 +3,7 @@ from commands.base.command import Command
 from daos.enrollmentDAO import EnrollmentDAO
 from models.enrollment import Enrollment
 from utils.input_helper import get_int_input
+from utils.logger import logger
 
 class CreateEnrollmentCommand(Command):
     def __init__(self, dao: EnrollmentDAO):
@@ -19,9 +20,9 @@ class CreateEnrollmentCommand(Command):
             enr = Enrollment(sid, cid)
             if self.dao.save(enr):
                 self.created_key = (sid, cid)
-                print(f"[+] Enrolled Student {sid} in Course {cid}")
+                logger.info(f"[+] Enrolled Student {sid} in Course {cid}")
                 return True
-        except Exception as e: print(f"[!] Error: {e}")
+        except Exception as e: logger.error(f"[!] Error: {e}")
         return False
 
     def undo(self):
