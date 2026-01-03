@@ -8,6 +8,9 @@ class Student:
         self.registration_date = registration_date or date.today()
 
     @property
+    def id(self): return self._id
+
+    @property
     def name(self): return self._name
 
     @name.setter

@@ -9,6 +9,12 @@ class Enrollment:
         self._enrollment_datetime = enrollment_datetime
 
     @property
+    def student_id(self): return self._student_id
+    
+    @property
+    def course_id(self): return self._course_id
+    
+    @property
     def progress_percentage(self): return self._progress_percentage
 
     @progress_percentage.setter

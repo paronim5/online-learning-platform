@@ -10,6 +10,8 @@ class Course:
         self.level = level
 
     @property
+    def id(self): return self._id
+    @property
     def title(self):
         return self._title
 
@@ -37,9 +39,13 @@ class Course:
 
     @level.setter
     def level(self, value):
-        if not isinstance(value, CourseLevel):
-            raise ValueError(f"Level must be a CourseLevel Enum. Got {type(value)}")
-        self._level = value
+        valid_levels = ['Beginner', 'Intermediate', 'Advanced', 'Expert', 'Master']
+        if isinstance(value, str) and value in valid_levels:
+            self._level = value # Accept the string if it's one of the MySQL ENUM values
+        elif isinstance(value, CourseLevel):
+            self._level = value.value
+        else:
+            raise ValueError(f"Invalid level: {value}")
 
     @property
     def id(self): 

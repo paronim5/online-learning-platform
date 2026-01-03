@@ -8,7 +8,8 @@ class Instructor:
         self.bio = bio
         self.rating = rating
         self.is_verified = is_verified
-
+    @property
+    def id(self): return self._id
     @property
     def name(self): return self._name
 

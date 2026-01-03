@@ -12,6 +12,16 @@ class Certificate:
         self.is_verified = is_verified
 
     @property
+    def id(self): return self._id
+
+    @property
+    def student_id(self): return self._student_id
+
+    @property
+    def course_id(self): return self._course_id
+
+
+    @property
     def certificate_number(self): return self._certificate_number
 
     @certificate_number.setter
