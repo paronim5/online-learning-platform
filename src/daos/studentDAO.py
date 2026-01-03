@@ -67,10 +67,10 @@ class StudentDAO(DaoInterface):
                 cursor.close()
             return student
     
-    def save(self, student: Student) -> bool:
+    def save(self, student: Student) -> int:
         query = "INSERT INTO students (name, email, registration_date) VALUES (%s, %s, %s)"
         params = (student.name, student.email, student.registration_date)
-        success = False
+        inserted_id = None
         try:
             cursor = self._db_con.connection.cursor()
             print(f"Executing command: {query}")
@@ -78,15 +78,15 @@ class StudentDAO(DaoInterface):
             cursor.execute(query, params)
             self._db_con.connection.commit() # Save changes
             
-            print(f"Success: Record inserted with ID {cursor.lastrowid}")
-            success = True
+            inserted_id = cursor.lastrowid
+            print(f"Success: Record inserted with ID {inserted_id}")
         except Exception as e:
             print(f"Command failed: {e}")
             self._db_con.connection.rollback() # Undo on error
         finally:
             if 'cursor' in locals():
                 cursor.close()
-            return success
+            return inserted_id
 
     def update(self, id, student: Student) -> bool:
         query = "UPDATE students SET name = %s, email = %s, registration_date = %s WHERE id = %s"

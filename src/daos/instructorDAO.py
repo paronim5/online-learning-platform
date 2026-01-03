@@ -36,10 +36,10 @@ class InstructorDAO(DaoInterface):
             if 'cursor' in locals(): cursor.close()
             return instructor
 
-    def save(self, instructor: Instructor) -> bool:
+    def save(self, instructor: Instructor) -> int:
         query = "INSERT INTO instructors (name, email, bio, rating, is_verified) VALUES (%s, %s, %s, %s, %s)"
         params = (instructor.name, instructor.email, instructor.bio, instructor.rating, instructor.is_verified)
-        return self._execute_write(query, params)
+        return self._execute_insert(query, params)
 
     def update(self, id, instructor: Instructor) -> bool:
         query = "UPDATE instructors SET name=%s, email=%s, bio=%s, rating=%s, is_verified=%s WHERE id=%s"
@@ -63,3 +63,14 @@ class InstructorDAO(DaoInterface):
         finally:
             if 'cursor' in locals(): cursor.close()
             return success
+
+    def _execute_insert(self, query, params) -> int:
+        try:
+            cursor = self._db_con.connection.cursor()
+            cursor.execute(query, params)
+            self._db_con.connection.commit()
+            return cursor.lastrowid
+        except Exception as e:
+            print(f"Error: {e}"); self._db_con.connection.rollback(); return None
+        finally:
+            if 'cursor' in locals(): cursor.close()

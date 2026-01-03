@@ -30,10 +30,10 @@ class CertificateDAO(DaoInterface):
             if 'cursor' in locals(): cursor.close()
             return cert
 
-    def save(self, cert: Certificate):
+    def save(self, cert: Certificate) -> int:
         query = "INSERT INTO certificates (student_id, course_id, issue_date, certificate_number, is_verified) VALUES (%s,%s,%s,%s,%s)"
         params = (cert.student_id, cert.course_id, cert.issue_date, cert.certificate_number, cert.is_verified)
-        return self._commit(query, params)
+        return self._insert(query, params)
 
     def update(self, id, cert: Certificate):
         query = "UPDATE certificates SET student_id=%s, course_id=%s, issue_date=%s, certificate_number=%s, is_verified=%s WHERE id=%s"
@@ -51,5 +51,16 @@ class CertificateDAO(DaoInterface):
             return cursor.rowcount > 0
         except Exception as e:
             print(f"Error: {e}"); self._db_con.connection.rollback(); return False
+        finally:
+            if 'cursor' in locals(): cursor.close()
+
+    def _insert(self, query, params) -> int:
+        try:
+            cursor = self._db_con.connection.cursor()
+            cursor.execute(query, params)
+            self._db_con.connection.commit()
+            return cursor.lastrowid
+        except Exception as e:
+            print(f"Error: {e}"); self._db_con.connection.rollback(); return None
         finally:
             if 'cursor' in locals(): cursor.close()
