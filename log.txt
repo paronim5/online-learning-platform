@@ -46,3 +46,138 @@
 [2026-01-04 19:51:33] [INFO] Test log message via logger.info
 [2026-01-04 19:51:33] [ERROR] Test error message via logger.error
 [2026-01-04 19:51:33] [INFO] --- Database Connection Established ---
+[2026-01-04 20:21:56] [INFO] --- Database Connection Established ---
+[2026-01-04 20:21:56] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-04 20:21:56] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-04 20:21:56] [INFO] --- Testing CSV Import (Students) ---
+[2026-01-04 20:21:56] [INFO] Executing command: INSERT INTO students (name, email, registration_date) VALUES (%s, %s, %s)
+[2026-01-04 20:21:56] [INFO] Success: Record inserted with ID 17
+[2026-01-04 20:21:56] [INFO] Executing command: INSERT INTO students (name, email, registration_date) VALUES (%s, %s, %s)
+[2026-01-04 20:21:56] [INFO] Success: Record inserted with ID 18
+[2026-01-04 20:21:56] [INFO] Executing command: INSERT INTO students (name, email, registration_date) VALUES (%s, %s, %s)
+[2026-01-04 20:21:56] [INFO] Success: Record inserted with ID 19
+[2026-01-04 20:21:56] [INFO] Successfully imported 3 students from C:\Users\paron\.a.paroniim\Spse Jecna\c4b\Python1\portfolio projects\rdbms project\data\students.csv
+[2026-01-04 20:21:56] [INFO] --- Testing JSON Import (Instructors) ---
+[2026-01-04 20:21:56] [INFO] Successfully imported 2 instructors from C:\Users\paron\.a.paroniim\Spse Jecna\c4b\Python1\portfolio projects\rdbms project\data\instructors.json
+[2026-01-04 20:21:56] [INFO] --- Testing XML Import (Courses) ---
+[2026-01-04 20:21:56] [INFO] Successfully imported 2 courses from C:\Users\paron\.a.paroniim\Spse Jecna\c4b\Python1\portfolio projects\rdbms project\data\courses.xml
+[2026-01-04 20:25:39] [INFO] --- Database Connection Established ---
+[2026-01-04 20:25:39] [INFO] --- STARTING ADVANCED OPERATIONS TEST ---
+[2026-01-04 20:25:39] [INFO] 1. Testing Register & Enroll...
+[2026-01-04 20:25:39] [INFO] Transactional Insert Step 1: Creating student Advanced Test Student
+[2026-01-04 20:25:39] [ERROR] Transaction Failed (Rolled Back): 1046 (3D000): No database selected
+[2026-01-04 20:25:39] [ERROR] FAILURE: Register & Enroll failed.
+[2026-01-04 20:25:57] [INFO] --- Database Connection Established ---
+[2026-01-04 20:25:57] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-04 20:25:57] [INFO] --- STARTING ADVANCED OPERATIONS TEST ---
+[2026-01-04 20:25:57] [INFO] 1. Testing Register & Enroll...
+[2026-01-04 20:25:57] [INFO] Transactional Insert Step 1: Creating student Advanced Test Student
+[2026-01-04 20:25:57] [INFO] Transactional Insert Step 2: Enrolling student 20 in course 1
+[2026-01-04 20:25:57] [INFO] Transaction Committed Successfully.
+[2026-01-04 20:25:57] [INFO] SUCCESS: Student registered and enrolled.
+[2026-01-04 20:25:57] [INFO] 2. Testing Display (Verification)...
+[2026-01-04 20:25:57] [INFO] Executing complex query: 
+        SELECT 
+            e.student_id, s.name as student_name, s.email,
+            e.course_id, c.title as course_title, 
+            e.progress_percentage, e.final_score
+        FROM enrollments e
+        JOIN students s ON e.student_id = s.id
+        JOIN courses c ON e.course_id = c.id
+        
+[2026-01-04 20:25:57] [INFO] Fetched 5 detailed enrollments.
+[2026-01-04 20:25:57] [INFO] Found enrollment: {'student_id': 20, 'student_name': 'Advanced Test Student', 'email': 'advanced@test.com', 'course_id': 1, 'course_title': 'Python pro začátečníky', 'progress_percentage': 0.0, 'final_score': 50.0}
+[2026-01-04 20:25:57] [INFO] SUCCESS: Verification passed.
+[2026-01-04 20:25:57] [INFO] 3. Testing Update (Email & Score)...
+[2026-01-04 20:25:57] [INFO] Transactional Update Step 1: Updating email for student 20
+[2026-01-04 20:25:57] [INFO] Transactional Update Step 2: Updating score for course 1
+[2026-01-04 20:25:57] [INFO] Transaction Committed Successfully.
+[2026-01-04 20:25:57] [INFO] SUCCESS: Update executed.
+[2026-01-04 20:25:57] [INFO] Executing complex query: 
+        SELECT 
+            e.student_id, s.name as student_name, s.email,
+            e.course_id, c.title as course_title, 
+            e.progress_percentage, e.final_score
+        FROM enrollments e
+        JOIN students s ON e.student_id = s.id
+        JOIN courses c ON e.course_id = c.id
+        
+[2026-01-04 20:25:57] [INFO] Fetched 5 detailed enrollments.
+[2026-01-04 20:25:57] [INFO] Verified update: {'student_id': 20, 'student_name': 'Advanced Test Student', 'email': 'updated@test.com', 'course_id': 1, 'course_title': 'Python pro začátečníky', 'progress_percentage': 0.0, 'final_score': 95.5}
+[2026-01-04 20:25:57] [INFO] SUCCESS: Update verification passed.
+[2026-01-04 20:25:57] [INFO] 5. Testing Delete Cascade...
+[2026-01-04 20:25:57] [INFO] Transactional Delete Step 1: Removing enrollments for student 20
+[2026-01-04 20:25:57] [INFO] Transactional Delete Step 2: Removing student 20
+[2026-01-04 20:25:57] [INFO] Transaction Committed Successfully.
+[2026-01-04 20:25:57] [INFO] SUCCESS: Delete executed.
+[2026-01-04 20:25:57] [INFO] Executing complex query: 
+        SELECT 
+            e.student_id, s.name as student_name, s.email,
+            e.course_id, c.title as course_title, 
+            e.progress_percentage, e.final_score
+        FROM enrollments e
+        JOIN students s ON e.student_id = s.id
+        JOIN courses c ON e.course_id = c.id
+        
+[2026-01-04 20:25:57] [INFO] Fetched 4 detailed enrollments.
+[2026-01-04 20:25:57] [INFO] SUCCESS: Delete verification passed. Student and enrollments are gone.
+[2026-01-04 20:25:57] [INFO] --- ALL ADVANCED TESTS COMPLETED SUCCESSFULLY ---
+[2026-01-04 20:34:06] [INFO] --- Database Connection Established ---
+[2026-01-04 20:34:06] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-04 20:34:06] [INFO] --- STARTING REFACTORED DAO TEST ---
+[2026-01-04 20:34:06] [INFO] 1. Testing Register & Enroll (StudentDAO)...
+[2026-01-04 20:34:35] [INFO] --- Database Connection Established ---
+[2026-01-04 20:34:35] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-04 20:34:35] [INFO] --- STARTING REFACTORED DAO TEST ---
+[2026-01-04 20:34:35] [INFO] 1. Testing Register & Enroll (StudentDAO)...
+[2026-01-04 20:34:35] [INFO] Transactional Insert Step 1: Creating student Refactored DAO Student
+[2026-01-04 20:34:35] [INFO] Transactional Insert Step 2: Enrolling student 21 in course 1
+[2026-01-04 20:34:35] [INFO] Transaction Committed Successfully.
+[2026-01-04 20:34:35] [INFO] SUCCESS: Student registered and enrolled.
+[2026-01-04 20:34:35] [INFO] 2. Testing Display (EnrollmentDAO)...
+[2026-01-04 20:34:35] [INFO] Executing complex query: 
+        SELECT 
+            e.student_id, s.name as student_name, s.email,
+            e.course_id, c.title as course_title, 
+            e.progress_percentage, e.final_score
+        FROM enrollments e
+        JOIN students s ON e.student_id = s.id
+        JOIN courses c ON e.course_id = c.id
+        
+[2026-01-04 20:34:35] [INFO] Fetched 5 detailed enrollments.
+[2026-01-04 20:34:35] [INFO] Found enrollment: {'student_id': 21, 'student_name': 'Refactored DAO Student', 'email': 'refactored@test.com', 'course_id': 1, 'course_title': 'Python pro začátečníky', 'progress_percentage': 0.0, 'final_score': 60.0}
+[2026-01-04 20:34:35] [INFO] SUCCESS: Verification passed.
+[2026-01-04 20:34:35] [INFO] 3. Testing Update (EnrollmentDAO)...
+[2026-01-04 20:34:35] [INFO] Transactional Update Step 1: Updating email for student 21
+[2026-01-04 20:34:35] [INFO] Transactional Update Step 2: Updating score for course 1
+[2026-01-04 20:34:35] [INFO] Transaction Committed Successfully.
+[2026-01-04 20:34:35] [INFO] SUCCESS: Update executed.
+[2026-01-04 20:34:35] [INFO] Executing complex query: 
+        SELECT 
+            e.student_id, s.name as student_name, s.email,
+            e.course_id, c.title as course_title, 
+            e.progress_percentage, e.final_score
+        FROM enrollments e
+        JOIN students s ON e.student_id = s.id
+        JOIN courses c ON e.course_id = c.id
+        
+[2026-01-04 20:34:35] [INFO] Fetched 5 detailed enrollments.
+[2026-01-04 20:34:35] [INFO] Verified update: {'student_id': 21, 'student_name': 'Refactored DAO Student', 'email': 'refactored_updated@test.com', 'course_id': 1, 'course_title': 'Python pro začátečníky', 'progress_percentage': 0.0, 'final_score': 99.9}
+[2026-01-04 20:34:35] [INFO] SUCCESS: Update verification passed.
+[2026-01-04 20:34:35] [INFO] 5. Testing Delete Cascade (StudentDAO)...
+[2026-01-04 20:34:35] [INFO] Transactional Delete Step 1: Removing enrollments for student 21
+[2026-01-04 20:34:35] [INFO] Transactional Delete Step 2: Removing student 21
+[2026-01-04 20:34:35] [INFO] Transaction Committed Successfully.
+[2026-01-04 20:34:35] [INFO] SUCCESS: Delete executed.
+[2026-01-04 20:34:35] [INFO] Executing complex query: 
+        SELECT 
+            e.student_id, s.name as student_name, s.email,
+            e.course_id, c.title as course_title, 
+            e.progress_percentage, e.final_score
+        FROM enrollments e
+        JOIN students s ON e.student_id = s.id
+        JOIN courses c ON e.course_id = c.id
+        
+[2026-01-04 20:34:35] [INFO] Fetched 4 detailed enrollments.
+[2026-01-04 20:34:35] [INFO] SUCCESS: Delete verification passed. Student and enrollments are gone.
+[2026-01-04 20:34:35] [INFO] --- ALL REFACTORED TESTS COMPLETED SUCCESSFULLY ---

@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Dr. JSON Import",
+    "email": "dr.json@example.com",
+    "bio": "Expert in JSON",
+    "rating": 4.8,
+    "is_verified": true
+  },
+  {
+    "name": "Prof. Data",
+    "email": "prof.data@example.com",
+    "bio": "Data Science Professor",
+    "rating": 4.5,
+    "is_verified": false
+  }
+]

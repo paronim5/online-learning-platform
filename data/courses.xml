@@ -1,0 +1,16 @@
+<courses>
+    <course>
+        <title>XML Basics</title>
+        <instructor_id>1</instructor_id>
+        <price>29.99</price>
+        <duration_hours>10.5</duration_hours>
+        <level>Beginner</level>
+    </course>
+    <course>
+        <title>Advanced XML Parsing</title>
+        <instructor_id>1</instructor_id>
+        <price>49.99</price>
+        <duration_hours>15.0</duration_hours>
+        <level>Advanced</level>
+    </course>
+</courses>

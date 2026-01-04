@@ -9,6 +9,61 @@ class StudentDAO(DaoInterface):
         self._db_con = conn()
         conn().select_database("online_learning_platform")
 
+    def register_with_course(self, student: Student, course_id: int, initial_score: float = 0) -> bool:
+        """
+        Transactional Insert: Creates a student and enrolls them in a course.
+        """
+        query_student = "INSERT INTO students (name, email, registration_date) VALUES (%s, %s, %s)"
+        query_enrollment = "INSERT INTO enrollments (student_id, course_id, final_score) VALUES (%s, %s, %s)"
+        
+        try:
+            cursor = self._db_con.connection.cursor()
+            
+            # 1. Insert Student
+            log(f"Transactional Insert Step 1: Creating student {student.name}")
+            cursor.execute(query_student, (student.name, student.email, student.registration_date))
+            student_id = cursor.lastrowid
+            
+            # 2. Insert Enrollment
+            log(f"Transactional Insert Step 2: Enrolling student {student_id} in course {course_id}")
+            cursor.execute(query_enrollment, (student_id, course_id, initial_score))
+            
+            self._db_con.connection.commit()
+            log("Transaction Committed Successfully.")
+            return True
+        except Exception as e:
+            self._db_con.connection.rollback()
+            log(f"Transaction Failed (Rolled Back): {e}", "ERROR")
+            return False
+        finally:
+            if 'cursor' in locals(): cursor.close()
+
+    def delete_with_enrollments(self, student_id) -> bool:
+        """
+        Transactional Delete: Deletes a student and all their enrollments.
+        """
+        delete_enrollments = "DELETE FROM enrollments WHERE student_id = %s"
+        delete_student = "DELETE FROM students WHERE id = %s"
+        
+        try:
+            cursor = self._db_con.connection.cursor()
+            
+            log(f"Transactional Delete Step 1: Removing enrollments for student {student_id}")
+            cursor.execute(delete_enrollments, (student_id,))
+            
+            log(f"Transactional Delete Step 2: Removing student {student_id}")
+            cursor.execute(delete_student, (student_id,))
+            
+            self._db_con.connection.commit()
+            log("Transaction Committed Successfully.")
+            return True
+        except Exception as e:
+            self._db_con.connection.rollback()
+            log(f"Transaction Failed (Rolled Back): {e}", "ERROR")
+            return False
+        finally:
+            if 'cursor' in locals(): cursor.close()
+
     def get_all(self) -> list:
         query = "SELECT id, name, email, registration_date FROM students"
         students =[]
