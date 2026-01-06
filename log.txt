@@ -181,3 +181,35 @@
 [2026-01-04 20:34:35] [INFO] Fetched 4 detailed enrollments.
 [2026-01-04 20:34:35] [INFO] SUCCESS: Delete verification passed. Student and enrollments are gone.
 [2026-01-04 20:34:35] [INFO] --- ALL REFACTORED TESTS COMPLETED SUCCESSFULLY ---
+[2026-01-05 21:20:03] [INFO] --- Database Connection Established ---
+[2026-01-05 21:20:03] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-05 21:20:03] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-05 21:20:03] [ERROR] Failed to initialize DAOs or Importer: name 'AdvancedService' is not defined
+[2026-01-05 21:30:36] [INFO] --- Database Connection Established ---
+[2026-01-05 21:30:36] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-05 21:30:36] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-05 21:30:36] [ERROR] Failed to initialize DAOs or Importer: name 'AdvancedService' is not defined
+[2026-01-05 21:34:32] [INFO] --- Database Connection Established ---
+[2026-01-05 21:34:32] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-05 21:34:32] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-05 21:34:32] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-05 21:34:32] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-05 21:37:14] [ERROR] File not found: jhfdg
+[2026-01-05 21:38:02] [INFO] Generating Course Performance Report...
+[2026-01-05 21:38:02] [INFO] Report generated with 3 rows.
+[2026-01-05 21:38:02] [ERROR] Failed to generate report: unsupported format string passed to NoneType.__format__
+[2026-01-05 21:38:55] [INFO] Transactional Insert Step 1: Creating student somethong
+[2026-01-05 21:38:55] [INFO] Transactional Insert Step 2: Enrolling student 22 in course 2
+[2026-01-05 21:38:55] [INFO] Transaction Committed Successfully.
+[2026-01-05 21:38:55] [INFO] Successfully registered student and enrolled in course.
+[2026-01-05 21:40:34] [INFO] executing command SELECT id, name, email, registration_date FROM students
+[2026-01-05 21:40:34] [INFO] Success: SELECT id, name, email, regist...
+[2026-01-05 21:40:34] [INFO] Successfully fetched 13 students.
+[2026-01-05 22:11:31] [INFO] --- Database Connection Established ---
+[2026-01-05 22:11:31] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-05 22:11:31] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-05 22:11:31] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-05 22:11:31] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-05 22:11:41] [INFO] Generating Course Performance Report...
+[2026-01-05 22:11:42] [INFO] Report generated with 4 rows.
+[2026-01-05 22:11:42] [INFO] Course performance report displayed successfully.

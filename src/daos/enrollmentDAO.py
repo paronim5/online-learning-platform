@@ -35,20 +35,19 @@ class EnrollmentDAO(DaoInterface):
             return results
 
     def update_score_and_student_email(self, student_id, course_id, new_score, new_email) -> bool:
-        """
-        Transactional Update: Updates student email and enrollment score.
-        """
-        update_student = "UPDATE students SET email = %s WHERE id = %s"
-        update_enrollment = "UPDATE enrollments SET final_score = %s WHERE student_id = %s AND course_id = %s"
+        # Transactional update spanning two tables
+        query_student = "UPDATE students SET email = %s WHERE id = %s"
+        query_enrollment = "UPDATE enrollments SET final_score = %s WHERE student_id = %s AND course_id = %s"
         
         try:
+            self._db_con.connection.start_transaction()
             cursor = self._db_con.connection.cursor()
             
             log(f"Transactional Update Step 1: Updating email for student {student_id}")
-            cursor.execute(update_student, (new_email, student_id))
+            cursor.execute(query_student, (new_email, student_id))
             
             log(f"Transactional Update Step 2: Updating score for course {course_id}")
-            cursor.execute(update_enrollment, (new_score, student_id, course_id))
+            cursor.execute(query_enrollment, (new_score, student_id, course_id))
             
             self._db_con.connection.commit()
             log("Transaction Committed Successfully.")
@@ -59,6 +58,40 @@ class EnrollmentDAO(DaoInterface):
             return False
         finally:
             if 'cursor' in locals(): cursor.close()
+
+    def get_course_performance_report(self) -> list:
+        """
+        Generates a summary report of course performance.
+        Aggregates data from Courses, Instructors, and Enrollments.
+        Returns a list of dictionaries.
+        """
+        query = """
+        SELECT 
+            c.title AS course_title,
+            i.name AS instructor_name,
+            COUNT(e.student_id) AS total_students,
+            AVG(e.final_score) AS average_score,
+            MIN(e.final_score) AS min_score,
+            MAX(e.final_score) AS max_score
+        FROM courses c
+        JOIN instructors i ON c.instructor_id = i.id
+        LEFT JOIN enrollments e ON c.id = e.course_id
+        GROUP BY c.id, c.title, i.name
+        HAVING total_students > 0
+        ORDER BY average_score DESC
+        """
+        results = []
+        try:
+            cursor = self._db_con.connection.cursor(dictionary=True)
+            log("Generating Course Performance Report...")
+            cursor.execute(query)
+            results = cursor.fetchall()
+            log(f"Report generated with {len(results)} rows.")
+        except Exception as e:
+            log(f"Error generating report: {e}", "ERROR")
+        finally:
+            if 'cursor' in locals(): cursor.close()
+            return results
 
     def get_all(self) -> list:
         query = "SELECT * FROM enrollments"

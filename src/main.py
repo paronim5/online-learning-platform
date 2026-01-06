@@ -11,9 +11,6 @@ from daos.courseDAO import CourseDAO
 from daos.instructorDAO import InstructorDAO
 from daos.enrollmentDAO import EnrollmentDAO
 from daos.certificateDAO import CertificateDAO
-
-from services.advanced_service import AdvancedService
-
 from commands.base.invoker import CommandInvoker
 
 # Import all concrete commands
@@ -46,6 +43,7 @@ from commands.multiTable.register_student_enrollment import RegisterStudentToCou
 from commands.multiTable.view_detailed_enrollments import ViewDetailedEnrollmentsCommand
 from commands.multiTable.update_student_enrollment import UpdateStudentEnrollmentCommand
 from commands.multiTable.delete_student_cascade import DeleteStudentCascadeCommand
+from commands.multiTable.generate_performance_report import GeneratePerformanceReportCommand
 
 from utils.logger import logger
 from utils.importer import DataImporter
@@ -57,8 +55,6 @@ def main():
         instructor_dao = InstructorDAO()
         enrollment_dao = EnrollmentDAO()
         certificate_dao = CertificateDAO()
-        
-        advanced_service = AdvancedService()
         
         importer = DataImporter()
     except Exception as e:
@@ -115,6 +111,7 @@ def main():
             print("2. View Detailed Enrollments (Join)")
             print("3. Update Student & Enrollment (Transaction)")
             print("4. Delete Student & Enrollments (Cascade Transaction)")
+            print("5. Generate Performance Report (Aggregation)")
             print("B. Back to Main Menu")
 
             adv_choice = input("Select Operation: ").strip().upper()
@@ -123,13 +120,15 @@ def main():
             
             cmd = None
             if adv_choice == '1':
-                cmd = RegisterStudentToCourseCommand(student_dao)
+                cmd = RegisterStudentToCourseCommand(student_dao, course_dao)
             elif adv_choice == '2':
                 cmd = ViewDetailedEnrollmentsCommand(enrollment_dao)
             elif adv_choice == '3':
                 cmd = UpdateStudentEnrollmentCommand(enrollment_dao)
             elif adv_choice == '4':
                 cmd = DeleteStudentCascadeCommand(student_dao)
+            elif adv_choice == '5':
+                cmd = GeneratePerformanceReportCommand(enrollment_dao)
             
             if cmd:
                 invoker.execute_command(cmd)
