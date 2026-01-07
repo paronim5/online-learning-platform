@@ -44,6 +44,8 @@ from commands.multiTable.view_detailed_enrollments import ViewDetailedEnrollment
 from commands.multiTable.update_student_enrollment import UpdateStudentEnrollmentCommand
 from commands.multiTable.delete_student_cascade import DeleteStudentCascadeCommand
 from commands.multiTable.generate_performance_report import GeneratePerformanceReportCommand
+from commands.multiTable.view_student_progress import ViewStudentProgressCommand
+from commands.multiTable.view_top_rated_courses import ViewTopRatedCoursesCommand
 
 from utils.logger import logger
 from utils.importer import DataImporter
@@ -112,6 +114,8 @@ def main():
             print("3. Update Student & Enrollment (Transaction)")
             print("4. Delete Student & Enrollments (Cascade Transaction)")
             print("5. Generate Performance Report (Aggregation)")
+            print("6. Show Database View: Student Progress")
+            print("7. Show Database View: Top Rated Courses")
             print("B. Back to Main Menu")
 
             adv_choice = input("Select Operation: ").strip().upper()
@@ -129,6 +133,10 @@ def main():
                 cmd = DeleteStudentCascadeCommand(student_dao)
             elif adv_choice == '5':
                 cmd = GeneratePerformanceReportCommand(enrollment_dao)
+            elif adv_choice == '6':
+                cmd = ViewStudentProgressCommand(enrollment_dao)
+            elif adv_choice == '7':
+                cmd = ViewTopRatedCoursesCommand(course_dao)
             
             if cmd:
                 invoker.execute_command(cmd)

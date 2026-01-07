@@ -48,6 +48,23 @@ class CourseDAO(DaoInterface):
             if 'cursor' in locals(): cursor.close()
             return courses
 
+    def get_top_rated_courses_view(self) -> list:
+        """
+        Fetches data from the top_rated_courses view.
+        """
+        query = "SELECT * FROM top_rated_courses"
+        results = []
+        try:
+            cursor = self._db_con.connection.cursor(dictionary=True)
+            cursor.execute(query)
+            results = cursor.fetchall()
+            log(f"Fetched {len(results)} rows from top_rated_courses view.")
+        except Exception as e:
+            log(f"Error fetching top rated courses view: {e}", "ERROR")
+        finally:
+            if 'cursor' in locals(): cursor.close()
+            return results
+
     def save(self, course: Course) -> int:
         query = "INSERT INTO courses (title, instructor_id, price, duration_hours, level) VALUES (%s, %s, %s, %s, %s)"
         params = (course.title, course.instructor_id, course.price, course.duration_hours, course.level)

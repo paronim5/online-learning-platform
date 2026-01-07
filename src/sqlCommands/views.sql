@@ -29,5 +29,5 @@ SELECT
 FROM courses c
 JOIN instructors i ON c.instructor_id = i.id
 LEFT JOIN enrollments e ON c.id = e.course_id
-GROUP BY c.id
+GROUP BY c.title, i.name, i.rating, c.level, c.price
 ORDER BY i.rating DESC, total_students DESC;

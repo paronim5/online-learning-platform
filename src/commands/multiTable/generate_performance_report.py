@@ -19,11 +19,12 @@ class GeneratePerformanceReportCommand(Command):
             print("-" * 95)
             
             for row in report_data:
-                avg = row['average_score'] if row['average_score'] is not None else 0.0
-                min_s = row['min_score'] if row['min_score'] is not None else 0.0
-                max_s = row['max_score'] if row['max_score'] is not None else 0.0
+                # If average_score is None, it means students are enrolled but not graded yet.
+                avg = f"{row['average_score']:.2f}" if row['average_score'] is not None else "N/A"
+                min_s = f"{row['min_score']}" if row['min_score'] is not None else "N/A"
+                max_s = f"{row['max_score']}" if row['max_score'] is not None else "N/A"
                 
-                print(f"{row['course_title']:<30} | {row['instructor_name']:<20} | {row['total_students']:<10} | {avg:<10.2f} | {min_s:<5} | {max_s:<5}")
+                print(f"{row['course_title']:<30} | {row['instructor_name']:<20} | {row['total_students']:<10} | {avg:<10} | {min_s:<5} | {max_s:<5}")
             
             print("-" * 95)
             log("Course performance report displayed successfully.")

@@ -213,3 +213,64 @@
 [2026-01-05 22:11:41] [INFO] Generating Course Performance Report...
 [2026-01-05 22:11:42] [INFO] Report generated with 4 rows.
 [2026-01-05 22:11:42] [INFO] Course performance report displayed successfully.
+[2026-01-09 10:08:46] [INFO] --- Database Connection Established ---
+[2026-01-09 10:08:47] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-09 10:08:47] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-09 10:08:47] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-09 10:08:47] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-09 10:09:02] [INFO] Generating Course Performance Report...
+[2026-01-09 10:09:03] [INFO] Report generated with 4 rows.
+[2026-01-09 10:09:03] [INFO] Course performance report displayed successfully.
+[2026-01-09 10:09:36] [INFO] Executing complex query: 
+        SELECT 
+            e.student_id, s.name as student_name, s.email,
+            e.course_id, c.title as course_title, 
+            e.progress_percentage, e.final_score
+        FROM enrollments e
+        JOIN students s ON e.student_id = s.id
+        JOIN courses c ON e.course_id = c.id
+        
+[2026-01-09 10:09:36] [INFO] Fetched 5 detailed enrollments.
+[2026-01-09 10:10:09] [INFO] Executing command: SELECT id, name, email, registration_date FROM students WHERE id = %s with ID: 3
+[2026-01-09 10:10:09] [INFO] Success: SELECT id, name, email, regist...
+[2026-01-09 10:10:09] [WARNING] No student found with ID: 3
+[2026-01-09 10:10:17] [INFO] executing command SELECT id, name, email, registration_date FROM students
+[2026-01-09 10:10:17] [INFO] Success: SELECT id, name, email, regist...
+[2026-01-09 10:10:17] [INFO] Successfully fetched 13 students.
+[2026-01-09 10:10:31] [INFO] Executing command: SELECT id, name, email, registration_date FROM students WHERE id = %s with ID: 1
+[2026-01-09 10:10:31] [INFO] Success: SELECT id, name, email, regist...
+[2026-01-09 10:10:31] [INFO] Successfully fetched student: Martin Dvořák
+[2026-01-09 10:10:35] [INFO] Executing command: UPDATE students SET name = %s, email = %s, registration_date = %s WHERE id = %s
+[2026-01-09 10:10:36] [WARNING] No student found with ID 1 to update.
+[2026-01-09 10:12:25] [WARNING] Invalid operation.
+[2026-01-09 10:17:49] [INFO] --- Database Connection Established ---
+[2026-01-09 10:17:49] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-09 10:17:49] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-09 10:17:49] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-09 10:17:49] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-09 10:18:06] [WARNING] Invalid input.
+[2026-01-09 10:19:54] [INFO] Executing complex query: 
+        SELECT 
+            e.student_id, s.name as student_name, s.email,
+            e.course_id, c.title as course_title, 
+            e.progress_percentage, e.final_score
+        FROM enrollments e
+        JOIN students s ON e.student_id = s.id
+        JOIN courses c ON e.course_id = c.id
+        
+[2026-01-09 10:19:54] [INFO] Fetched 5 detailed enrollments.
+[2026-01-09 10:23:30] [WARNING] Invalid option.
+[2026-01-09 10:23:38] [INFO] --- Database Connection Established ---
+[2026-01-09 10:23:38] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-09 10:23:38] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-09 10:23:38] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-09 10:23:38] [INFO] --- Switched to database: online_learning_platform ---
+[2026-01-09 10:23:41] [INFO] Fetched 5 rows from student_progress view.
+[2026-01-09 10:29:54] [INFO] Fetched 14 rows from top_rated_courses view.
+[2026-01-09 10:35:10] [INFO] --- Database Connection Established ---
+[2026-01-09 11:05:52] [INFO] --- Database Connection Established ---
+[2026-01-09 11:06:13] [INFO] --- Database Connection Established ---
+[2026-01-11 13:54:05] [INFO] --- Database Connection Established ---
+[2026-01-11 13:54:07] [INFO] --- Database Connection Established ---
+[2026-01-11 13:54:22] [INFO] --- Database Connection Established ---
+[2026-01-11 19:07:00] [INFO] --- Database Connection Established ---

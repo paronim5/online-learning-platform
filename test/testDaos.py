@@ -1,3 +1,12 @@
+import os
+import sys
+
+# Add src to path to ensure imports work
+current_dir = os.path.dirname(os.path.abspath(__file__))
+src_dir = os.path.join(os.path.dirname(current_dir), 'src')
+if src_dir not in sys.path:
+    sys.path.append(src_dir)
+
 import random
 import string
 from datetime import date

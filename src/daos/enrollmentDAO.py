@@ -93,6 +93,23 @@ class EnrollmentDAO(DaoInterface):
             if 'cursor' in locals(): cursor.close()
             return results
 
+    def get_student_progress_view(self) -> list:
+        """
+        Fetches data from the student_progress view.
+        """
+        query = "SELECT * FROM student_progress"
+        results = []
+        try:
+            cursor = self._db_con.connection.cursor(dictionary=True)
+            cursor.execute(query)
+            results = cursor.fetchall()
+            log(f"Fetched {len(results)} rows from student_progress view.")
+        except Exception as e:
+            log(f"Error fetching student progress view: {e}", "ERROR")
+        finally:
+            if 'cursor' in locals(): cursor.close()
+            return results
+
     def get_all(self) -> list:
         query = "SELECT * FROM enrollments"
         results = []
